@@ -133,9 +133,9 @@ def get_model_advanced(train_data_loader=None, n_epochs=10,lr=1e-4,config=None):
           return H * W * config[-1][1]
             
         in_features = _in_features(H, W, config)
-        self.fc = nn.Sequential(nn.Linear(in_features, 2048),
-                                nn.Linear(2048, 1024),nn.Linear(1024, 512)
-                                ,nn.Linear(512,  num_classes),)
+        self.fc = nn.Sequential(nn.Linear(in_features, 20),
+                                nn.Linear(20, 10),nn.Linear(10, 5)
+                                ,nn.Linear(5,  num_classes),)
 
 
         def forward(self, x):

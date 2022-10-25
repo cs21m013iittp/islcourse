@@ -37,10 +37,10 @@ def get_model(train_data_loader=None, n_epochs=10):
     def __init__(self, ch, H, W, num_classes):
       super(cs21m013, self).__init__()
       self.conv_layers = nn.Sequential(
-          nn.Conv2d(ch, 8, 3, padding='same'),
-          nn.Conv2d(8, 16, 3, padding='same'),
+          nn.Conv2d(ch, 5, 3, padding='same'),
+          nn.Conv2d(5, 8, 3, padding='same'),
           )
-      in_features = 16 * H * W
+      in_features = 8 * H * W
       self.fc = nn.Sequential(
           nn.Linear(in_features, 20),
           nn.Linear(20, 10),

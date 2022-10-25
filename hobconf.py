@@ -61,7 +61,30 @@ def test_model(model1=None, test_data_loader=None):
   # ... your code ...
   # ... and so on ...
   # calculate accuracy, precision, recall and f1score
+ 
+  device = 'cuda' if torch.cuda.is_available() else 'cpu'
   
-  print ('Returning metrics... (rollnumber: xx)')
+  total_loss = 0.0
+  correct = 0
+  for X_b, y_b in test_data_loader:
+    X_b, y_b = X_b.to(device), y_b.to(device)
+    logits = model1(X_b)
+    loss = nn.CrossEntropyLoss()(logits, y_b)
+    total_loss += loss.item()
+
+    probs = nn.Softmax(dim=1)(logits)
+    preds = probs.argmax(dim=1)
+
+    correct = (preds == y_b).sum().item()
+
+    preds = preds.cpu().detach().numpy()
+    y_b = y_b.cpu().detach().numpy()
+
+
+    accuracy_val = correct / len(test_data_loader.dataset)
+    precision_val = precision_score(y_b, preds, average='macro')
+    recall_val = recall_score(y_b, preds, average='macro')
+    f1score_val = f1_score(y_b, preds, average='macro')
+    print ('Returning metrics... (cs21m013: xx)')
   
   return accuracy_val, precision_val, recall_val, f1score_val

@@ -90,56 +90,48 @@ def compare_clusterings(ypred_1=None,ypred_2=None):
 
 ###### PART 2 ######
 
-def build_lr_model(X=None, y=None):
-  lr_model = LogisticRegression()
+def build_lr_model(X, y):
+  
+  lr_model = LogisticRegression().fit(X, y)
   # write your code...
   # Build logistic regression, refer to sklearn
-  if X.ndim > 2:
-      n_samples = len(X)
-      X= X.reshape((n_samples, -1))
-  lr_model.fit(X,y)
   return lr_model
 
-def build_rf_model(X=None, y=None):
-  rf_model = RandomForestClassifier()
+def build_rf_model(X, y):
+  
+  
   # write your code...
   # Build Random Forest classifier, refer to sklearn
-  if X.ndim > 2:
-      n_samples = len(X)
-      X= X.reshape((n_samples, -1))
-  rf_model.fit(X,y)
+  rf_model=RandomForestClassifier()
+  rf_model.fit(X, y)
+  
   return rf_model
 
-
-def get_metrics(model1=None,X=None,y=None):
-  # Obtain accuracy, precision, recall, f1score, auc score - refer to sklearn metrics
+def get_metrics(model1,X,y):
   
-  if X.ndim > 2:
-      n_samples = len(X)
-      X= X.reshape((n_samples, -1))
-  classes = set()
-  for i in y:
-      classes.add(i)
-  num_classes = len(classes)
-
-  ypred = model1.predict(X)
-  acc, prec, rec, f1, auc = 0,0,0,0,0
+  y_test=y
+  y_pred_test = model1.predict(X)
+  
+  
+  
+  
+  
+  # View accuracy score
+  acc=accuracy_score(y_test, y_pred_test)
+  # print(acc)
+  rec=recall_score(y_test,y_pred_test,average='macro')
+  #print(rec)
+  prec=precision_score(y_test,y_pred_test,average='macro')
+  #print(prec)
+  f1=f1_score(y_test,y_pred_test,average='macro')
+  
+  fpr, tpr, thresholds = metrics.roc_curve(y_test, y_pred_test, pos_label=2)
+  auc = metrics.auc(fpr, tpr)
+  
+  #auc=roc_auc_score(y_test,y_pred_test,multi_class='ovr')
+  #print(auc)
   # write your code here...
-  acc = accuracy_score(y,ypred)
-  if num_classes == 2:
-    prec = precision_score(y,ypred)
-    recall = recall_score(y,ypred)
-    f1 = f1_score(y,ypred)
-    auc = roc_auc_score(y,ypred)
-
-  else:
-    prec = precision_score(y,ypred,average='macro')
-    recall = recall_score(y,ypred,average='macro')
-    f1 = f1_score(y,ypred,average='macro')
-    pred_prob = model.predict_proba(X)
-    roc_auc_score(y, pred_prob, multi_class='ovr')
-    #auc = roc_auc_score(y,ypred,average='macro',multi_class='ovr')
-
+  
   return acc, prec, rec, f1, auc
 
 def get_paramgrid_lr():

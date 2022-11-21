@@ -50,7 +50,7 @@ def assign_kmeans(km=None,X=None):
   # For each of the points in X, assign one of the means
   # refer to predict() function of the KMeans in sklearn
   # write your code ...
-  ypred = None
+  ypred = km.predict(X)
   return ypred
 
 def compare_clusterings(ypred_1=None,ypred_2=None):

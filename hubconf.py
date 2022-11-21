@@ -86,25 +86,9 @@ def get_metrics(model1=None,X=None,y=None):
   
   def get_metrics(model,X,y):
   
-  # Obtain accuracy, precision, recall, f1score, auc score - refer to sklearn metrics
-  X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=2,stratify=y)
-  model.fit(X_train,y_train)
   
   
-  y_pred_test = model.predict(X_test)
-  # View accuracy score
-  acc=accuracy_score(y_test, y_pred_test)
-  # print(acc)
-  rec=recall_score(y_test,y_pred_test)
-  #print(rec)
-  prec=precision_score(y_test,y_pred_test)
-  #print(prec)
-  f1=f1_score(y_test,y_pred_test)
-  
-  auc=roc_auc_score(y_test,y_pred_test)
-  #print(auc)
-  # write your code here...
-  return acc, prec, rec, f1, auc
+
   
 
 def get_paramgrid_lr():

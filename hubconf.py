@@ -66,14 +66,14 @@ def compare_clusterings(ypred_1=None,ypred_2=None):
 
 def build_lr_model(X=None, y=None):
   pass
-  lr_model = None
+  lr_model = LogisticRegression(random_state=0).fit(X, y)
   # write your code...
   # Build logistic regression, refer to sklearn
   return lr_model
 
 def build_rf_model(X=None, y=None):
   pass
-  rf_model = None
+  rf_model=RandomForestClassifier(max_depth=4, random_state=0)
   # write your code...
   # Build Random Forest classifier, refer to sklearn
   return rf_model
@@ -81,9 +81,31 @@ def build_rf_model(X=None, y=None):
 def get_metrics(model1=None,X=None,y=None):
   pass
   # Obtain accuracy, precision, recall, f1score, auc score - refer to sklearn metrics
-  acc, prec, rec, f1, auc = 0,0,0,0,0
+  X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=2,stratify=y)
+  model.fit(X_train,y_train)
+  
+  def get_metrics(model,X,y):
+  
+  # Obtain accuracy, precision, recall, f1score, auc score - refer to sklearn metrics
+  X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=2,stratify=y)
+  model.fit(X_train,y_train)
+  
+  
+  y_pred_test = model.predict(X_test)
+  # View accuracy score
+  acc=accuracy_score(y_test, y_pred_test)
+  # print(acc)
+  rec=recall_score(y_test,y_pred_test)
+  #print(rec)
+  prec=precision_score(y_test,y_pred_test)
+  #print(prec)
+  f1=f1_score(y_test,y_pred_test)
+  
+  auc=roc_auc_score(y_test,y_pred_test)
+  #print(auc)
   # write your code here...
   return acc, prec, rec, f1, auc
+  
 
 def get_paramgrid_lr():
   # you need to return parameter grid dictionary for use in grid search cv

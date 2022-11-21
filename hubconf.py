@@ -31,7 +31,9 @@ def get_data_mnist():
   pass
   # write your code here
   # Refer to sklearn data sets
-  X,y = None
+  mnist_digits= load_digits()
+  X = mnist_digits.data
+  y = mnist_digits.target
   # write your code ...
   return X,y
 

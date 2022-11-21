@@ -18,16 +18,14 @@ from sklearn.metrics import homogeneity_score,completeness_score,v_measure_score
 
 ###### PART 1 ######
 
-def get_data_blobs(n_points=100):
-  pass
+def get_data_blobs(n_points):
   # write your code here
   # Refer to sklearn data sets
   X, y = make_blobs(n_samples=n_points)
   # write your code ...
   return X,y
 
-def get_data_circles(n_points=100):
-  pass
+def get_data_circles(n_points):
   # write your code here
   # Refer to sklearn data sets
   X, y = make_circles(n_samples=n_points)
@@ -35,7 +33,6 @@ def get_data_circles(n_points=100):
   return X,y
 
 def get_data_mnist():
-  pass
   # write your code here
   # Refer to sklearn data sets
   mnist_digits= load_digits()

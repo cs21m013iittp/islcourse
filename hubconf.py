@@ -41,7 +41,7 @@ def build_kmeans(X=None,k=10):
   pass
   # k is a variable, calling function can give a different number
   # Refer to sklearn KMeans method
-  km = None # this is the KMeans object
+  km = KMeans(n_clusters=k).fit(X) # this is the KMeans object
   # write your code ...
   return km
 

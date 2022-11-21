@@ -4,7 +4,21 @@
 # full sklearn, full pytorch, pandas, matplotlib, numpy are all available
 # Ideally you do not need to pip install any other packages!
 # Avoid pip install requirement on the evaluation program side, if you use above packages and sub-packages of them, then that is fine!
-
+import torch
+from torch import nn
+import torch.optim as optim
+from sklearn.datasets import make_blobs
+from sklearn.datasets import make_circles
+from sklearn.datasets import load_digits
+from sklearn.cluster import KMeans
+from sklearn import metrics
+from sklearn.metrics import homogeneity_score,completeness_score,v_measure_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report,recall_score,roc_auc_score,precision_score,f1_score
+from sklearn.model_selection import GridSearchCV
 ###### PART 1 ######
 
 def get_data_blobs(n_points=100):
@@ -156,7 +170,7 @@ def perform_gridsearch_cv_multimetric(model=None, param_grid=None, cv=5, X=None,
   
   return top1_scores
       
-  return top1_scores
+
 ###### PART 3 ######
 class MyNN(nn.Module):
   def __init__(self,inp_dim=64,hid_dim=13,num_classes=10):

@@ -123,7 +123,7 @@ def get_metrics(model=None,X=None,y=None):
     f1 = f1_score(y,ypred,average='macro')
     pred_prob = model.predict_proba(X)
     roc_auc_score(y, pred_prob, multi_class='ovr')
-    #auc = roc_auc_score(y,ypred,average='macro',multi_class='ovr')
+    auc = roc_auc_score(y,ypred,average='macro',multi_class='ovr')
 
   return acc, prec, rec, f1, auc
 

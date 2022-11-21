@@ -122,7 +122,7 @@ def get_metrics(model1=None,X=None,y=None):
       classes.add(i)
   num_classes = len(classes)
 
-  ypred = model.predict(X)
+  ypred = model1.predict(X)
   acc, prec, rec, f1, auc = 0,0,0,0,0
   # write your code here...
   acc = accuracy_score(y,ypred)

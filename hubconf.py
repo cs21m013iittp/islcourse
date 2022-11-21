@@ -90,6 +90,94 @@ def compare_clusterings(ypred_1=None,ypred_2=None):
 
 ###### PART 2 ######
 
+
+import torch
+from torch import nn
+import torch.optim as optim
+from sklearn.datasets import make_blobs
+from sklearn.datasets import make_circles
+from sklearn.datasets import load_digits
+from sklearn.cluster import KMeans
+from sklearn import metrics
+from sklearn.metrics import homogeneity_score,completeness_score,v_measure_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report,recall_score,roc_auc_score,precision_score,f1_score
+from sklearn.model_selection import GridSearchCV
+
+
+
+
+
+# You can import whatever standard packages are required
+
+# full sklearn, full pytorch, pandas, matplotlib, numpy are all available
+# Ideally you do not need to pip install any other packages!
+# Avoid pip install requirement on the evaluation program side, if you use above packages and sub-packages of them, then that is fine!
+
+###### PART 1 ######
+
+def get_data_blobs(n_points=100):
+  
+  # write your code here
+  # Refer to sklearn data sets
+  X, y = make_blobs(n_samples=n_points)
+  # write your code ...
+  return X,y
+
+def get_data_circles(n_points=100):
+  
+  # write your code here
+  # Refer to sklearn data sets
+  X, y = make_circles(n_samples=n_points)
+  # write your code ...
+  return X,y
+
+def get_data_mnist():
+  
+  # write your code here
+  # Refer to sklearn data sets
+  
+  digits= load_digits()
+  X = digits.data
+  y = digits.target
+  
+  # write your code ...
+  return X,y
+
+def build_kmeans(X=None,k=10):
+  
+  # k is a variable, calling function can give a different number
+  # Refer to sklearn KMeans method
+  km = KMeans(n_clusters=k).fit(X)
+  
+  return km
+
+def assign_kmeans(km,X):
+  
+  # For each of the points in X, assign one of the means
+  # refer to predict() function of the KMeans in sklearn
+  # write your code ...
+  ypred = km.predict(X)
+  return ypred
+
+def compare_clusterings(ypred_1=None,ypred_2=None):
+  
+  # refer to sklearn documentation for homogeneity, completeness and vscore
+  h=homogeneity_score(ypred_1,ypred_2)
+  c=completeness_score(ypred_1,ypred_2)
+  v=v_measure_score(ypred_1,ypred_2)
+  
+  print(h)
+  print(c)
+  print(v)
+  
+  return h,c,v
+
+###### PART 2 ######
+
 def build_lr_model(X, y):
   
   lr_model = LogisticRegression().fit(X, y)
@@ -134,10 +222,17 @@ def get_metrics(model1,X,y):
   
   return acc, prec, rec, f1, auc
 
+
+# part 2b ...
+
+
 def get_paramgrid_lr():
   # you need to return parameter grid dictionary for use in grid search cv
   # penalty: l1 or l2
+  
   lr_param_grid = {'penalty' : ['l1','l2']}
+
+  
   # refer to sklearn documentation on grid search and logistic regression
   # write your code here...
   return lr_param_grid
@@ -159,7 +254,8 @@ def perform_gridsearch_cv_multimetric(model=None, param_grid=None, cv=5, X=None,
   # the cv parameter can change, ie number of folds  
   
   # metrics = [] the evaluation program can change what metrics to choose
-
+  
+  grid_search_cv = None
   # create a grid search cv object
   # fit the object on X and y input above
   # write your code here...
@@ -171,6 +267,7 @@ def perform_gridsearch_cv_multimetric(model=None, param_grid=None, cv=5, X=None,
   
   top1_scores = []
   
+  
   if X.ndim > 2:
       n_samples = len(X)
       X= X.reshape((n_samples, -1))
@@ -179,6 +276,8 @@ def perform_gridsearch_cv_multimetric(model=None, param_grid=None, cv=5, X=None,
       grid_search_cv = GridSearchCV(model,param_grid,scoring = score,cv=cv)
       grid_search_cv.fit(X,y)
       top1_scores.append(grid_search_cv.best_estimator_.get_params())
+  
+  return top1_scores
       
   return top1_scores
 ###### PART 3 ######
